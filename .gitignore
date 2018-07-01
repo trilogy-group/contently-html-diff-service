@@ -1,0 +1,9 @@
+# Build artifacts
+target/
+
+# IDE artifacts
+.vscode
+.idea
+.settings
+.classpath
+.project
