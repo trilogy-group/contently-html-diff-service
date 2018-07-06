@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
 @RestController
 public class HtmlDiffController {
 
-    @RequestMapping("/diff")
+    @RequestMapping(value = "/diff", produces = "text/html; charset=UTF-8")
     public void diff(@RequestParam(value="oldHtml") String oldHtml, @RequestParam(value="newHtml") String newHtml, OutputStream outputStream) {
 
         try {
@@ -36,6 +36,8 @@ public class HtmlDiffController {
             SAXTransformerFactory tf = (SAXTransformerFactory) TransformerFactory.newInstance();
             TransformerHandler result = tf.newTransformerHandler();
             result.getTransformer().setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            result.getTransformer().setOutputProperty(OutputKeys.METHOD, "html");
+            result.getTransformer().setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             result.setResult(new StreamResult(outputStream));
 
             String[] css = new String[]{};
