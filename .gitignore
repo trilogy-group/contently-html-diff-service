@@ -2,6 +2,7 @@
 target/
 
 # IDE artifacts
+.vs
 .vscode
 .idea
 .settings
