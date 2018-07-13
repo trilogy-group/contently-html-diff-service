@@ -12,7 +12,6 @@ import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
 
 import org.outerj.daisy.diff.HtmlCleaner;
-import org.outerj.daisy.diff.XslFilter;
 import org.outerj.daisy.diff.html.HTMLDiffer;
 import org.outerj.daisy.diff.html.HtmlSaxDiffOutput;
 import org.outerj.daisy.diff.html.TextNodeComparator;
@@ -27,7 +26,8 @@ import org.xml.sax.SAXException;
 public class HtmlDiffController {
 
     @RequestMapping(value = "/diff", produces = "text/html; charset=UTF-8")
-    public void diff(@RequestParam(value="oldHtml") String oldHtml, @RequestParam(value="newHtml") String newHtml, OutputStream outputStream) {
+    public void diff(@RequestParam(value = "oldHtml") String oldHtml, @RequestParam(value = "newHtml") String newHtml,
+            OutputStream outputStream) {
 
         try {
             InputStream oldStream = new ByteArrayInputStream(oldHtml.getBytes());
@@ -39,9 +39,6 @@ public class HtmlDiffController {
             result.getTransformer().setOutputProperty(OutputKeys.METHOD, "html");
             result.getTransformer().setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             result.setResult(new StreamResult(outputStream));
-
-            String[] css = new String[]{};
-            XslFilter filter = new XslFilter();
 
             Locale locale = Locale.getDefault();
             String prefix = "diff";

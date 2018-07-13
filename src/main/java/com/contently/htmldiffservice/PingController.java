@@ -8,6 +8,6 @@ public class PingController {
 
     @RequestMapping("/ping")
     public String ping() {
-        return "pong";
+        return "operational";
     }
 }

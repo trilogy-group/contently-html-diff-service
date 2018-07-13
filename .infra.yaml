@@ -1,0 +1,8 @@
+# See https://github.com/contently/infra/blob/master/docs/infra.yaml.md for information about the structure and purpose of this file.
+environment_variables:
+  - APP_NAME: html-diff-service
+applications:
+  - name: "{{ context.ENVIRONMENT_SETTINGS.APP_NAME }}"
+    dockerfile: Dockerfile
+    kubernetes_app:
+      name: "{{ context.ENVIRONMENT_SETTINGS.APP_NAME }}"
