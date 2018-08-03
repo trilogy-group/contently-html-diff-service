@@ -1,0 +1,11 @@
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!-- <pattern>%h %l %u %t '%r' %s %b %D</pattern> -->
+
+      <!-- Outputing JSON format for easier log processing -->
+      <pattern>{"remote_ip": "%h", "timestamp": "%t", "method": "%m", "path": "%U", "status": "%s", "size": "%b", "duration": "%D"}</pattern>
+    </encoder>
+  </appender>
+  <appender-ref ref="STDOUT" />
+</configuration>
