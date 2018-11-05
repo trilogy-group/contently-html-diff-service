@@ -1,5 +1,5 @@
 version: v1.0
-name: First pipeline example
+name: HTML Diff Service pipeline
 agent:
   machine:
     type: e1-standard-2
@@ -8,25 +8,25 @@ agent:
 blocks:
   - name: "Build"
     task:
-      env_vars:
-        - name: APP_ENV
-          value: prod
+      # env_vars:
+      #   - name: APP_ENV
+      #     value: prod
       jobs:
       - name: Docker build
         commands:
           - checkout
-          - ls -1
-          - echo $APP_ENV
-          - echo "Docker build..."
+          - echo "Building image..."
+          - docker build .
+          # - docker run hello:v1
           - echo "done"
 
-  - name: "Smoke tests"
-    task:
-      jobs:
-      - name: Smoke
-        commands:
-          - checkout
-          - echo "make smoke"
+  # - name: "Smoke tests"
+  #   task:
+  #     jobs:
+  #     - name: Smoke
+  #       commands:
+  #         - checkout
+  #         - echo "make smoke"
 
   - name: "Unit tests"
     task:
@@ -46,18 +46,18 @@ blocks:
           - checkout
           - echo "make security"
 
-  - name: "Integration tests"
-    task:
-      jobs:
-      - name: Cucumber
-        commands:
-          - checkout
-          - echo "make cucumber"
+  # - name: "Integration tests"
+  #   task:
+  #     jobs:
+  #     - name: Cucumber
+  #       commands:
+  #         - checkout
+  #         - echo "make cucumber"
 
-  - name: "Push Image"
-    task:
-      jobs:
-      - name: Push
-        commands:
-          - checkout
-          - echo "make docker.push"
+  # - name: "Push Image"
+  #   task:
+  #     jobs:
+  #     - name: Push
+  #       commands:
+  #         - checkout
+  #         - echo "make docker.push"
