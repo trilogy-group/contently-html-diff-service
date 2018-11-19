@@ -3,8 +3,10 @@ package com.contently.htmldiffservice;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
+import javax.servlet.ServletResponse;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXTransformerFactory;
@@ -25,11 +27,17 @@ import org.xml.sax.SAXException;
 @RestController
 public class HtmlDiffController {
 
+    public static final String CHARSET_ENCODING = StandardCharsets.UTF_8.name();
+    public static final String CONTENT_TYPE = "text/html";
+
     @RequestMapping(value = "/diff", produces = "text/html; charset=UTF-8")
     public void diff(@RequestParam(value = "oldHtml") String oldHtml, @RequestParam(value = "newHtml") String newHtml,
-            OutputStream outputStream) {
+            OutputStream outputStream, ServletResponse response) {
 
         try {
+            response.setCharacterEncoding(CHARSET_ENCODING);
+            response.setContentType(CONTENT_TYPE);
+
             InputStream oldStream = new ByteArrayInputStream(oldHtml.getBytes());
             InputStream newStream = new ByteArrayInputStream(newHtml.getBytes());
 
@@ -37,7 +45,7 @@ public class HtmlDiffController {
             TransformerHandler result = tf.newTransformerHandler();
             result.getTransformer().setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             result.getTransformer().setOutputProperty(OutputKeys.METHOD, "html");
-            result.getTransformer().setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            result.getTransformer().setOutputProperty(OutputKeys.ENCODING, CHARSET_ENCODING);
             result.setResult(new StreamResult(outputStream));
 
             Locale locale = Locale.getDefault();
@@ -47,9 +55,9 @@ public class HtmlDiffController {
             DomTreeBuilder oldHandler = new DomTreeBuilder();
 
             InputSource oldSource = new InputSource(oldStream);
-            oldSource.setEncoding("UTF-8");
+            oldSource.setEncoding(CHARSET_ENCODING);
             InputSource newSource = new InputSource(newStream);
-            newSource.setEncoding("UTF-8");
+            newSource.setEncoding(CHARSET_ENCODING);
             cleaner.cleanAndParse(oldSource, oldHandler);
 
             TextNodeComparator leftComparator = new TextNodeComparator(oldHandler, locale);
