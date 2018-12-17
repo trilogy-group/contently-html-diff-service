@@ -16,8 +16,8 @@ Rails application container to simplify and reduce the threat surface.
 ## Decision
 
 Spring Boot is used to allow for the service to be standalone with support for
-embedded servers. The decision allows portability to deploy the service with our
-a J2EE server. 
+embedded servers. The decision allows portability to deploy the service without
+a J2EE server.
 
 ## Consequences
 
